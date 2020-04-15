@@ -6,7 +6,6 @@
 using namespace v8;
 
 Nan::Persistent<Object> persistentHandle;
-Nan::AsyncResource asyncResource("gamepad");
 
 NAN_METHOD(nGamepad_init) {
   Nan::HandleScope scope;
@@ -65,6 +64,7 @@ NAN_METHOD(nGamepad_processEvents) {
 }
 
 void nGamepad_deviceAttach_cb(struct Gamepad_device* device, void* context) {
+  Nan::AsyncResource asyncResource("gamepad");
   Local<Value> info[] = {
     Nan::New("attach").ToLocalChecked(),
     Nan::New<Number>(device->deviceID),
@@ -74,6 +74,7 @@ void nGamepad_deviceAttach_cb(struct Gamepad_device* device, void* context) {
 }
 
 void nGamepad_deviceRemove_cb(struct Gamepad_device* device, void* context) {
+  Nan::AsyncResource asyncResource("gamepad");
   Local<Value> info[] = {
     Nan::New("remove").ToLocalChecked(),
     Nan::New<Number>(device->deviceID),
@@ -82,6 +83,7 @@ void nGamepad_deviceRemove_cb(struct Gamepad_device* device, void* context) {
 }
 
 void nGamepad_buttonDown_cb(struct Gamepad_device* device, unsigned int buttonID, double timestamp, void* context) {
+  Nan::AsyncResource asyncResource("gamepad");
   Local<Value> info[] = {
     Nan::New("down").ToLocalChecked(),
     Nan::New<Number>(device->deviceID),
@@ -92,6 +94,7 @@ void nGamepad_buttonDown_cb(struct Gamepad_device* device, unsigned int buttonID
 }
 
 void nGamepad_buttonUp_cb(struct Gamepad_device* device, unsigned int buttonID, double timestamp, void* context) {
+  Nan::AsyncResource asyncResource("gamepad");
   Local<Value> info[] = {
     Nan::New("up").ToLocalChecked(),
     Nan::New<Number>(device->deviceID),
@@ -102,6 +105,7 @@ void nGamepad_buttonUp_cb(struct Gamepad_device* device, unsigned int buttonID, 
 }
 
 void nGamepad_axisMove_cb(struct Gamepad_device* device, unsigned int axisID, float value, float lastValue, double timestamp, void * context) {
+  Nan::AsyncResource asyncResource("gamepad");
   Local<Value> info[] = {
     Nan::New("move").ToLocalChecked(),
     Nan::New<Number>(device->deviceID),
